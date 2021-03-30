@@ -15,21 +15,8 @@ const INGREDIENT_PRICES = {
 };
 
 class BurgerBuilder extends Component {
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {...}
-    // }
-    state = {
-        ingredients: {
-            salad: 0,
-            bacon: 0,
-            cheese: 0,
-            meat: 0
-        },
-        totalPrice: 4,
-        purchasable: false,
-        purchasing: false,
-        loggedIn: false
+    constructor(props) {
+        super(props)
     }
     updatePurchaseState (ingredients) {
         const sum = Object.keys( ingredients )
