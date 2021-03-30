@@ -1,13 +1,15 @@
-const initialState = {
+
+export default function appReducer(state={
     ingredients: {
         meat: 0,
         salad: 0,
         bacon: 0,
         cheese: 0,
-    }
-}
+    },
+    purchasable: false,
+    totalPrice: 4,
 
-export default function appReducer(state, action) {
+}, action) {
     switch (action.type) {
         case "ADD_INGREDIENT":
             const newState_add = Object.assign({}, state)
@@ -17,5 +19,7 @@ export default function appReducer(state, action) {
             const newState_remove = Object.assign({}, state)
             newState_remove.ingredients[action.payload] -= 1
             return newState_remove
+        default:
+            return state
         }
     }
