@@ -7,6 +7,7 @@ import Modal from '../../components/UI/Modal/Modal';
 // import { dispatch } from 'react-redux'
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import axios from '../../axios-orders'
+import { connect} from "react-redux";
 import * as actions from '../../containers/store/actions'
 
 const INGREDIENT_PRICES = {
@@ -121,11 +122,16 @@ class BurgerBuilder extends Component {
         );
     }
 }
+const mapStateToProps = (state) => ({
+    meat: state.ingredients.meat,
+    cheese: state.ingredients.cheese,
+    salad: state.ingredients.salad,
+    bacon: state.ingredients.bacon,
+  })
 // const mapDispatchToProps = dispatch => {
 //     return {
 //         onIngredientAdded: (ingName) => dispatch(actions.addIngredient(ingName)),
 //         onIngredientRemoved: (ingName) => dispatch(actions.removeIngredient(ingName)),
 //     }
 // }
-export default BurgerBuilder;
-console.log(BurgerBuilder.salad)
+export default connect(mapStateToProps)(BurgerBuilder)
