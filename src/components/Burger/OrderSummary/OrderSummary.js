@@ -10,14 +10,14 @@ class OrderSummary extends Component {
     }
 
     render () {
+        console.log(this.props)
         const ingredientSummary = Object.keys( this.props.ingredients )
             .map( igKey => {
                 return (
                     <li key={igKey}>
-                        <span style={{ textTransform: 'capitalize' }}>{igKey}</span>: {this.props.ingredients[igKey]}
+                        <span style={{ textTransform: 'capitalize' }}>{igKey}</span>: {this.props.ingredients[igKey].quantity}
                     </li> );
             } );
-
         return (
             <Aux>
                 <h3>Your Order</h3>
@@ -25,7 +25,7 @@ class OrderSummary extends Component {
                 <ul>
                     {ingredientSummary}
                 </ul>
-                <p><strong>Total Price: {this.props.price.toFixed( 2 )}</strong></p>
+                <p><strong>Total Price: {this.props.totalPrice.toFixed( 2 )}</strong></p>
                 <p>Continue to Checkout?</p>
                 <Button btnType="Danger" clicked={this.props.purchaseCancelled}>CANCEL</Button>
                 <Button btnType="Success" clicked={this.props.purchaseContinued}>CONTINUE</Button>
@@ -34,7 +34,10 @@ class OrderSummary extends Component {
     }
 }
 const mapStateToProps = (state) => (
-    state.ingredients
+    {
+        "ingredients": state.ingredients,
+        "totalPrice": state.totalPrice,
+    }
 )
 
 export default connect(mapStateToProps)(OrderSummary);

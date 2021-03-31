@@ -1,10 +1,22 @@
 
 export default function appReducer(state={
     ingredients: {
-        meat: 0,
-        salad: 0,
-        bacon: 0,
-        cheese: 0,
+        meat: {
+            quantity: 0,
+            price: 1.3 
+        },
+        salad: {
+            quantity: 0,
+            price: 0.5 
+        },
+        bacon: {
+            quantity: 0,
+            price: 0.7 
+        },
+        cheese: {
+            quantity: 0,
+            price: 0.4
+        },
     },
     purchasable: false,
     totalPrice: 4,
@@ -13,11 +25,13 @@ export default function appReducer(state={
     switch (action.type) {
         case "ADD_INGREDIENT":
             const newState_add = Object.assign({}, state)
-            newState_add.ingredients[action.payload] += 1
+            newState_add.ingredients[action.payload].quantity += 1
+            newState_add.totalPrice += newState_add.ingredients[action.payload].quantity.price
             return newState_add
         case "REMOVE_INGREDIENT":
             const newState_remove = Object.assign({}, state)
-            newState_remove.ingredients[action.payload] -= 1
+            newState_remove.ingredients[action.payload].quantity -= 1
+            newState_add.totalPrice -= newState_remove.ingredients[action.payload].quantity.price
             return newState_remove
         default:
             return state

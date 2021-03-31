@@ -2,6 +2,7 @@ import React from 'react';
 
 import classes from './BuildControls.css';
 import BuildControl from './BuildControl/BuildControl';
+import { connect, useSelector } from 'react-redux';
 
 const controls = [
     { label: 'Salad', type: 'salad' },
@@ -10,9 +11,12 @@ const controls = [
     { label: 'Meat', type: 'meat' },
 ];
 
-const buildControls = (props) => (
+const buildControls = (props) => {
+    const totalPrice = useSelector(state => state.totalPrice)
+    const ingredients = useSelector(state => state.ingredients)
+    return(    
     <div className={classes.BuildControls}>
-        <p>Current Price: <strong>{props.price.toFixed(2)}</strong></p>
+        <p>Current Price: <strong>{totalPrice.toFixed(2)}</strong></p>
         {controls.map(ctrl => (
             <BuildControl 
                 key={ctrl.label} 
@@ -25,7 +29,6 @@ const buildControls = (props) => (
             className={classes.OrderButton}
             disabled={!props.purchasable}
             onClick={props.ordered}>ORDER NOW</button>
-    </div>
-);
-
-export default buildControls;
+    </div>)
+};
+export default buildControls

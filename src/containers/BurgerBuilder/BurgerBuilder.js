@@ -8,7 +8,7 @@ import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import axios from '../../axios-orders'
 import { connect} from "react-redux";
-import * as actions from '../../containers/store/actions'
+import { addIngredient, removeIngredient } from '../store/actions'
 
 const INGREDIENT_PRICES = {
     salad: 0.5,
@@ -49,7 +49,7 @@ class BurgerBuilder extends Component {
     // else {
     //     alert("You can only have up to 9 of each ingredient!")
     // }
-        this.props.dispatch(actions.addIngredient(type))
+        this.props.dispatch(addIngredient(type))
     }
 
     removeIngredientHandler = ( type ) => {
@@ -67,7 +67,7 @@ class BurgerBuilder extends Component {
         // const newPrice = oldPrice - priceDeduction;
         // this.setState( { totalPrice: newPrice, ingredients: updatedIngredients } );
         // this.updatePurchaseState(updatedIngredients);
-        this.props.dispatch(actions.removeIngredient(type))
+        this.props.dispatch(removeIngredient(type))
     }
 
     purchaseHandler = () => {
@@ -101,6 +101,7 @@ class BurgerBuilder extends Component {
             disabledInfo[key] = disabledInfo[key] <= 0
         }
         // {salad: true, meat: false, ...}
+        console.log(this.props.ingredients)
         return (
             <Aux>
                 <Modal show={this.props.purchasing} modalClosed={this.purchaseCancelHandler}>
@@ -123,10 +124,7 @@ class BurgerBuilder extends Component {
     }
 }
 const mapStateToProps = (state) => ({
-    meat: state.ingredients.meat,
-    cheese: state.ingredients.cheese,
-    salad: state.ingredients.salad,
-    bacon: state.ingredients.bacon,
+    "ingredients": state.ingredients
   })
 // const mapDispatchToProps = dispatch => {
 //     return {
