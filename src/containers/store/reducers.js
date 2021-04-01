@@ -26,7 +26,7 @@ export default function appReducer(state={
         case "ADD_INGREDIENT":
             const newState_add = Object.assign({}, state)
             newState_add.ingredients[action.payload].quantity += 1
-            newState_add.totalPrice += newState_add.ingredients[action.payload].quantity.price
+            newState_add.totalPrice += newState_add.ingredients[action.payload].price
             return newState_add
         case "REMOVE_INGREDIENT":
             const newState_remove = Object.assign({}, state)

@@ -2,22 +2,18 @@ import React from 'react';
 
 import classes from './Burger.css';
 import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
-import { useSelector } from 'react-redux'; 
+import { connect } from 'react-redux'; 
 
 const burger = ( props ) => {
-    console.log(props.ingredients)
-    const ingredients = useSelector(state => state.ingredients)
-    console.log(ingredients)
-    let transformedIngredients = Object.keys( ingredients )
+    let transformedIngredients = Object.keys( props.ingredients )
         .map( igKey => {
-            return [...Array( ingredients[igKey].quantity )].map( ( _, i ) => {
+            return [...Array( props.ingredients[igKey] )].map( ( _, i ) => {
                 return <BurgerIngredient key={igKey + i} type={igKey} />;
             } );
         } )
         .reduce((arr, el) => {
             return arr.concat(el)
         }, [])
-    console.log(transformedIngredients)
     if (transformedIngredients.length === 0) {
         transformedIngredients = <p>Please start adding ingredients!</p>;
     }
@@ -29,5 +25,14 @@ const burger = ( props ) => {
         </div>
     );
 };
-
-export default burger;
+// 
+const mapStateToProps = (state) => ({
+    ingredients:{
+        salad: state.ingredients.salad.quantity,
+        meat: state.ingredients.meat.quantity,
+        bacon: state.ingredients.bacon.quantity,
+        cheese: state.ingredients.cheese.quantity
+    }
+}
+)
+export default connect(mapStateToProps)(burger);

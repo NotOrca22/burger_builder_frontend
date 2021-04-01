@@ -18,9 +18,6 @@ const INGREDIENT_PRICES = {
 };
 
 class BurgerBuilder extends Component {
-    constructor(props) {
-        super(props)
-    }
     updatePurchaseState (ingredients) {
         const sum = Object.keys( ingredients )
             .map( igKey => {
@@ -31,7 +28,7 @@ class BurgerBuilder extends Component {
             }, 0 );
         this.setState( { purchasable: sum > 0 } );
     }
-
+    // console.log(this.props)
     addIngredientHandler = ( type ) => {
     //     const oldCount = this.props.ingredients[type];
     //     if (oldCount < 9) {
@@ -101,7 +98,6 @@ class BurgerBuilder extends Component {
             disabledInfo[key] = disabledInfo[key] <= 0
         }
         // {salad: true, meat: false, ...}
-        console.log(this.props.ingredients)
         return (
             <Aux>
                 <Modal show={this.props.purchasing} modalClosed={this.purchaseCancelHandler}>
@@ -111,7 +107,7 @@ class BurgerBuilder extends Component {
                         purchaseCancelled={this.purchaseCancelHandler}
                         purchaseContinued={this.purchaseContinueHandler} />
                 </Modal>
-                <Burger ingredients={this.props.ingredients} />
+                <Burger />
                 <BuildControls
                     ingredientAdded={this.addIngredientHandler}
                     ingredientRemoved={this.removeIngredientHandler}
@@ -124,8 +120,9 @@ class BurgerBuilder extends Component {
     }
 }
 const mapStateToProps = (state) => ({
-    "ingredients": state.ingredients
-  })
+    ingredients: state.ingredients
+    }
+  )
 // const mapDispatchToProps = dispatch => {
 //     return {
 //         onIngredientAdded: (ingName) => dispatch(actions.addIngredient(ingName)),
