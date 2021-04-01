@@ -20,6 +20,7 @@ export default function appReducer(state={
     },
     purchasable: false,
     totalPrice: 4,
+    purchasing: false,
 
 }, action) {
     switch (action.type) {
@@ -33,6 +34,18 @@ export default function appReducer(state={
             newState_remove.ingredients[action.payload].quantity -= 1
             newState_add.totalPrice -= newState_remove.ingredients[action.payload].quantity.price
             return newState_remove
+        case "ALLOW_PURCHASE":
+            const newState_allow = Object.assign({}, state)
+            newState_allow.purchasable = true
+            return newState_allow
+        case "START_PURCHASE":
+            const newState_purchasing = Object.assign({}, state)
+            newState_purchasing.purchasing = true
+            return newState_purchasing
+        case "STOP_PURCHASE":
+        const newState_endpurchasing = Object.assign({}, state)
+            newState_endpurchasing.purchasing = false
+            return newState_endpurchasing
         default:
             return state
         }

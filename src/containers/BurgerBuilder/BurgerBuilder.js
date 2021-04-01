@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { Redirect, Route } from 'react-router-dom'
 import Aux from '../../hoc/Aux/Aux';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
@@ -8,7 +8,7 @@ import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import axios from '../../axios-orders'
 import { connect} from "react-redux";
-import { addIngredient, removeIngredient } from '../store/actions'
+import { addIngredient, removeIngredient, allowPurchase, startPurchasing, stopPurchasing } from '../store/actions'
 
 const INGREDIENT_PRICES = {
     salad: 0.5,
@@ -18,15 +18,19 @@ const INGREDIENT_PRICES = {
 };
 
 class BurgerBuilder extends Component {
+    
     updatePurchaseState (ingredients) {
         const sum = Object.keys( ingredients )
             .map( igKey => {
-                return ingredients[igKey];
+                return ingredients[igKey].quantity;
             } )
             .reduce( ( sum, el ) => {
                 return sum + el;
             }, 0 );
-        this.setState( { purchasable: sum > 0 } );
+        if (sum > 0) {
+            this.props.dispatch(allowPurchase())
+            console.log("dispatched")
+        }
     }
     // console.log(this.props)
     addIngredientHandler = ( type ) => {
@@ -46,6 +50,7 @@ class BurgerBuilder extends Component {
     // else {
     //     alert("You can only have up to 9 of each ingredient!")
     // }
+    this.updatePurchaseState({salad: 1});
         this.props.dispatch(addIngredient(type))
     }
 
@@ -68,11 +73,11 @@ class BurgerBuilder extends Component {
     }
 
     purchaseHandler = () => {
-        this.setState({purchasing: true});
+        this.props.dispatch(startPurchasing())
     }
 
     purchaseCancelHandler = () => {
-        this.setState({purchasing: false});
+        this.props.dispatch(stopPurchasing());
     }
     purchaseContinueHandler = () => {
         // alert('You continue!');
@@ -81,13 +86,11 @@ class BurgerBuilder extends Component {
         // alert("Thank you! Your order was successful!")
         const queryParams = [];
         for (let i in this.props.ingredients) {
-            queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
+            queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.props.ingredients[i]));
         }
-        const queryString = queryParams.join('&');
-        this.props.history.push({
-            pathname: '/checkout',
-            search: '?' + queryString
-        });
+        <Route exact path="/checkout">
+            <Redirect push to="/checkout" />
+        </Route>
     }
     
     render () {
@@ -120,7 +123,8 @@ class BurgerBuilder extends Component {
     }
 }
 const mapStateToProps = (state) => ({
-    ingredients: state.ingredients
+    ingredients: state.ingredients,
+    purchasing: state.purchasing
     }
   )
 // const mapDispatchToProps = dispatch => {

@@ -14,6 +14,8 @@ const controls = [
 const buildControls = (props) => {
     const totalPrice = useSelector(state => state.totalPrice)
     const ingredients = useSelector(state => state.ingredients)
+    const purchasable = useSelector(state => state.purchasable)
+    const purchasing= useSelector(state => state.purchasing)
     return(    
     <div className={classes.BuildControls}>
         <p>Current Price: <strong>{totalPrice.toFixed(2)}</strong></p>
@@ -27,7 +29,7 @@ const buildControls = (props) => {
         ))}
         <button 
             className={classes.OrderButton}
-            disabled={!props.purchasable}
+            disabled={purchasable}
             onClick={props.ordered}>ORDER NOW</button>
     </div>)
 };

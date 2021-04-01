@@ -51,8 +51,6 @@ class ContactData extends Component {
             },
             deliveryMethod: 'fastest'
         }
-        console.log(toString(this.state.ingredients.cheese))
-        console.log(this.state)
         axios.get('/place_order?ingredient=' + this.props.ingredients.bacon.toString() + this.props.ingredients.cheese.toString() + this.props.ingredients.meat.toString() + this.props.ingredients.salad.toString())
         alert("Thank you! Your order was successful!")
     }
@@ -77,4 +75,9 @@ class ContactData extends Component {
     }
 }
 
+const mapStateToProps = (state) => (
+    {
+        "ingredients": state.ingredients,
+    }
+)
 export default ContactData;
