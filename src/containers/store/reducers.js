@@ -90,6 +90,7 @@ export default function appReducer(state={
             newState_init.totalPrice = 4
             return newState_init
         case "LOGIN":
+            this.props.history.push("/")
             console.log("logging in")
             const newState_login = Object.assign({}, state)
             newState_login.token = action.payload

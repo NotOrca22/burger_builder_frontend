@@ -124,7 +124,9 @@ class Auth extends Component {
     render () {
         const formElementsArray = [];
         if (this.props.logged_in) {
-            this.props.history.push("/")
+            return (
+                <h1>Welcome back!</h1>
+            )
         } else {
         for ( let key in this.state.controls ) {
             formElementsArray.push( {
@@ -149,58 +151,7 @@ class Auth extends Component {
             <div className={classes.Auth}>
                 <form onSubmit={this.submitHandler}>
                  {form}
-                 <Link to={{ pathname: '/', state: {
-    ingredients: {
-        meat: {
-            quantity: 0,
-            price: 1.3 
-        },
-        salad: {
-            quantity: 0,
-            price: 0.5 
-        },
-        bacon: {
-            quantity: 0,
-            price: 0.7 
-        },
-        cheese: {
-            quantity: 0,
-            price: 0.4
-        },
-        ketchup: {
-            quantity: 0,
-            price: 0.15
-        },
-        mustard: {
-            quantity: 0,
-            price: 0.10
-        },
-        chicken: {
-            quantity: 0,
-            price: 3.00
-        }
-    },
-    customer: {
-        name: 'Max Schwarzmüller',
-        address: {
-            street: 'Teststreet 1',
-            zipCode: '41351',
-            country: 'Germany'
-        },
-        email: 'test@test.com'
-    },
-    creditCard: {
-        number: '0000 0000 0000 0000',
-        expiry: '07/29',
-        CVC: '420'
-    },
-    purchasable: false,
-    totalPrice: 4,
-    purchasing: false,
-    logged_in: true,
-    token: "",
-
-} }} className={classes.Success} style={checkoutButton} clicked={this.props.purchaseContinued}>
+                 <Link to="/" className={classes.Success} style={checkoutButton} clicked={this.props.submitHandler}>
                  LOGIN
                  </Link>
                 </form>
