@@ -9,6 +9,9 @@ const controls = [
     { label: 'Bacon', type: 'bacon' },
     { label: 'Cheese', type: 'cheese' },
     { label: 'Meat', type: 'meat' },
+    { label: 'Ketchup', type: 'ketchup' },
+    { label: 'Mustard', type: 'mustard' },
+    { label: "Chicken", type: 'chicken' }
 ];
 
 const buildControls = (props) => {
@@ -16,6 +19,7 @@ const buildControls = (props) => {
     const ingredients = useSelector(state => state.ingredients)
     const purchasable = useSelector(state => state.purchasable)
     const purchasing= useSelector(state => state.purchasing)
+    console.log(controls)
     return(    
     <div className={classes.BuildControls}>
         <p>Current Price: <strong>{totalPrice.toFixed(2)}</strong></p>

@@ -18,6 +18,9 @@ const checkoutSummary = (props) => {
             <p>Cheese: {ingredients.cheese.quantity}</p>
             <p>Bacon: {ingredients.bacon.quantity}</p>
             <p>Salad: {ingredients.salad.quantity}</p>
+            <p>Ketchup: {ingredients.ketchup.quantity}</p>
+            <p>Mustard: {ingredients.mustard.quantity}</p>
+            <p>Chicken: {ingredients.chicken.quantity}</p>
             <p>Price: <strong>{totalPrice.toFixed(2)}</strong></p>
             <Button 
                 btnType="Danger"

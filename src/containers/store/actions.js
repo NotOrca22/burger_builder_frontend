@@ -3,6 +3,8 @@ const REMOVE_INGREDIENT = "REMOVE_INGREDIENT"
 const ALLOW_PURCHASE = "ALLOW_PURCHASE"
 const START_PURCHASE = "START_PURCHASE"
 const STOP_PURCHASE = "STOP_PURCHASE"
+const INIT_INGREDIENTS = "INIT_INGREDIENTS"
+const LOGIN = "LOGIN"
 
 export const addIngredient = (ingredient) => ({
     type: ADD_INGREDIENT,
@@ -24,4 +26,13 @@ export const startPurchasing = () => ({
 
 export const stopPurchasing = () => ({
     type: STOP_PURCHASE
+})
+
+export const initIngredients = () => ({
+    type: INIT_INGREDIENTS
+})
+
+export const login = (token) => ({
+    type: LOGIN,
+    payload: token
 })

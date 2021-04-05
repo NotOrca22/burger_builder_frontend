@@ -111,3 +111,24 @@
     background: linear-gradient(#bf3813, #c45e38);
     margin: 2% auto;
 }
+
+.Ketchup {
+  width: 85%;
+  height: 1%;
+  background: linear-gradient(#9a382d, #ff0000);
+  margin: 1% auto;
+}
+
+.Mustard {
+  width: 85%;
+  height: 1%;
+  background: linear-gradient(#ffdb58, #ffff00);
+  margin: 1% auto;
+}
+
+.Chicken {
+  width: 95%;
+  height: 8%;
+  background: linear-gradient(#f5d4b7, #f5d4b9);
+  margin: 2% auto
+}

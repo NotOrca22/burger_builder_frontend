@@ -31,7 +31,10 @@ const mapStateToProps = (state) => ({
         salad: state.ingredients.salad.quantity,
         meat: state.ingredients.meat.quantity,
         bacon: state.ingredients.bacon.quantity,
-        cheese: state.ingredients.cheese.quantity
+        cheese: state.ingredients.cheese.quantity,
+        ketchup: state.ingredients.ketchup.quantity,
+        mustard: state.ingredients.mustard.quantity,
+        chicken: state.ingredients.chicken.quantity
     }
 }
 )

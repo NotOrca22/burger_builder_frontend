@@ -1,44 +1,52 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-
+import { connect, dispatch } from 'react-redux';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import classes from './Auth.css';
-import axios from 'axios';
-
+import Axios from 'axios';
+import { login } from '../store/actions'
+import { Link } from 'react-router-dom';
+const checkoutButton = {
+    "fontWeight": "bold",
+    "textDecoration": "none"
+}
 class Auth extends Component {
-    state = {
-        controls: {
-            email: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'email',
-                    placeholder: 'Mail Address'
+    constructor(props) {
+        super(props)
+        this.state = {
+            controls: {
+                email: {
+                    elementType: 'input',
+                    elementConfig: {
+                        type: 'email',
+                        placeholder: 'Mail Address'
+                    },
+                    value: '',
+                    validation: {
+                        required: true,
+                        isEmail: true
+                    },
+                    valid: false,
+                    touched: false
                 },
-                value: '',
-                validation: {
-                    required: true,
-                    isEmail: true
-                },
-                valid: false,
-                touched: false
+                password: {
+                    elementType: 'input',
+                    elementConfig: {
+                        type: 'password',
+                        placeholder: 'Password'
+                    },
+                    value: '',
+                    validation: {
+                        required: true,
+                        minLength: 6
+                    },
+                    valid: false,
+                    touched: false
+                }
             },
-            password: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'password',
-                    placeholder: 'Password'
-                },
-                value: '',
-                validation: {
-                    required: true,
-                    minLength: 6
-                },
-                valid: false,
-                touched: false
-            }
-        },
-        isSignup: true
+            isSignup: false
+        }
+        this.submitHandler = this.submitHandler.bind(this)
     }
 
     checkValidity ( value, rules ) {
@@ -84,14 +92,26 @@ class Auth extends Component {
         };
         this.setState( { controls: updatedControls } );
     }
-
+    printResponse = (response) => {
+        console.log(response)
+    }
     submitHandler = ( event ) => {
-        if (this.state.isSignup == true) {
-            axios.get("http://localhost:8082/signup?username=" + this.state.controls.email.value + "&password=" + this.state.controls.password.values)
+        
+        if (this.state.isSignup === true) {
+            Axios.get("http://localhost:8082/signup?username=" + this.state.controls.email.value + "&password=" + this.state.controls.password.value)
             alert('Signed up! Your username is ' + this.state.controls.email.value + '!')
         } else {
-            axios.get("http://localhost:8082/signin?username=" + this.state.controls.email.value + "&password=" + this.state.controls.password.values)
-            alert('Signed in!')
+            const url = "http://localhost:8082/signin?username=" + this.state.controls.email.value + "&password=" + this.state.controls.password.value
+            Axios.get(url).then((response) => {
+                if (response.status === 200) {
+                console.log(response.data["Authorization"])
+                console.log(response.headers)
+                alert('signed in')
+                this.props.dispatch(login(response.headers["Authorization"]))
+                }
+            })
+            .catch(error => console.log(error))
+            
         }
     }
 
@@ -103,6 +123,12 @@ class Auth extends Component {
 
     render () {
         const formElementsArray = [];
+        if (this.props.logged_in) {
+            // this.props.history.replace("/")
+            return (
+                <h1>Logged in!</h1>
+            )
+        } else {
         for ( let key in this.state.controls ) {
             formElementsArray.push( {
                 id: key,
@@ -125,15 +151,71 @@ class Auth extends Component {
         return (
             <div className={classes.Auth}>
                 <form onSubmit={this.submitHandler}>
-                    {form}
-                    <Button btnType="Success">SUBMIT</Button>
+                 {form}
+                 <Link to={{ pathname: '/', state: {
+    ingredients: {
+        meat: {
+            quantity: 0,
+            price: 1.3 
+        },
+        salad: {
+            quantity: 0,
+            price: 0.5 
+        },
+        bacon: {
+            quantity: 0,
+            price: 0.7 
+        },
+        cheese: {
+            quantity: 0,
+            price: 0.4
+        },
+        ketchup: {
+            quantity: 0,
+            price: 0.15
+        },
+        mustard: {
+            quantity: 0,
+            price: 0.10
+        },
+        chicken: {
+            quantity: 0,
+            price: 3.00
+        }
+    },
+    customer: {
+        name: 'Max Schwarzmüller',
+        address: {
+            street: 'Teststreet 1',
+            zipCode: '41351',
+            country: 'Germany'
+        },
+        email: 'test@test.com'
+    },
+    creditCard: {
+        number: '0000 0000 0000 0000',
+        expiry: '07/29',
+        CVC: '420'
+    },
+    purchasable: false,
+    totalPrice: 4,
+    purchasing: false,
+    logged_in: true,
+    token: "",
+
+} }} className={classes.Success} style={checkoutButton} clicked={this.props.purchaseContinued}>
+                 LOGIN
+                 </Link>
                 </form>
                 <Button 
                     clicked={this.switchAuthModeHandler}
                     btnType="Danger">SWITCH TO {this.state.isSignup ? 'SIGNIN' : 'SIGNUP'}</Button>
             </div>
         );
-    }
+    }}
 }
 
-export default Auth;
+const mapStateToProps = (state) => ({
+    logged_in: state["logged_in"]
+})
+export default connect(mapStateToProps)(Auth);

@@ -13,3 +13,11 @@
         width: 500px;
     }
 }
+.Success {
+    color: #5C9210;
+    font-weight: bold;
+}
+
+.Danger {
+    color: #944317;
+}

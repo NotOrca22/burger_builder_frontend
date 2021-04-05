@@ -8,13 +8,15 @@ import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import axios from '../../axios-orders'
 import { connect} from "react-redux";
+import { browserHistory } from 'react-router';
 import { addIngredient, removeIngredient, allowPurchase, startPurchasing, stopPurchasing } from '../store/actions'
 
 const INGREDIENT_PRICES = {
     salad: 0.5,
     cheese: 0.4,
     meat: 1.3,
-    bacon: 0.7
+    bacon: 0.7,
+    ketchup: 0.15
 };
 
 class BurgerBuilder extends Component {
@@ -94,6 +96,8 @@ class BurgerBuilder extends Component {
     }
     
     render () {
+        const {logged_in} = this.props.history.location.state
+        if (logged_in) {
         const disabledInfo = {
             ...this.props.ingredients
         };
@@ -120,11 +124,20 @@ class BurgerBuilder extends Component {
                     price={this.props.totalPrice} />
             </Aux>
         );
+        } else {
+            return(
+                <div style={{"textAlign": "center"}}>
+                    <h1>Please Log In</h1>
+                    <h4>Hello Guest, please log in </h4>
+                </div>
+            )
+        }
     }
 }
 const mapStateToProps = (state) => ({
     ingredients: state.ingredients,
-    purchasing: state.purchasing
+    purchasing: state.purchasing,
+    // logged_in: state.logged_in
     }
   )
 // const mapDispatchToProps = dispatch => {
