@@ -5,7 +5,7 @@ import Button from '../../components/UI/Button/Button';
 import classes from './Auth.css';
 import Axios from 'axios';
 import { login } from '../store/actions'
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 const checkoutButton = {
     "fontWeight": "bold",
     "textDecoration": "none"
@@ -124,10 +124,7 @@ class Auth extends Component {
     render () {
         const formElementsArray = [];
         if (this.props.logged_in) {
-            // this.props.history.replace("/")
-            return (
-                <h1>Logged in!</h1>
-            )
+            this.props.history.push("/")
         } else {
         for ( let key in this.state.controls ) {
             formElementsArray.push( {

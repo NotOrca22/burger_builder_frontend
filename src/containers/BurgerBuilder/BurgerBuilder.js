@@ -96,8 +96,7 @@ class BurgerBuilder extends Component {
     }
     
     render () {
-        const {logged_in} = this.props.history.location.state
-        if (logged_in) {
+        if (this.props.logged_in) {
         const disabledInfo = {
             ...this.props.ingredients
         };
@@ -137,7 +136,7 @@ class BurgerBuilder extends Component {
 const mapStateToProps = (state) => ({
     ingredients: state.ingredients,
     purchasing: state.purchasing,
-    // logged_in: state.logged_in
+    logged_in: state.logged_in
     }
   )
 // const mapDispatchToProps = dispatch => {

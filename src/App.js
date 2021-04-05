@@ -6,6 +6,7 @@ import Layout from './hoc/Layout/Layout';
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
 import Checkout from './containers/Checkout/Checkout';
 import Auth from './containers/Auth/Auth'
+import {store, persistor} from './index'
 // import  from './containers/store/reducers'
 const mapStateToProps = (state) => ({
   meat: state.ingredients.meat,
@@ -25,7 +26,7 @@ class App extends Component {
           <Route path="/orders" />
           <Route path="/auth" component={Auth}/>
           <Route path="/" exact >
-            <BurgerBuilder ingredients={ingredients} logged_in={false} />
+            <BurgerBuilder ingredients={ingredients} />
           </Route>
           </Switch>
         </Layout>
